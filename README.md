@@ -54,7 +54,9 @@ import { getAvailabilityForLocation, LockerSize } from 'inpost';
 const availability = await getAvailabilityForLocation('UK00058679');
 
 for (const size of [LockerSize.SMALL, LockerSize.MEDIUM, LockerSize.LARGE]) {
-  console.log(`${availability.availabilityByLockerSize[size].availableCount}/${availability.availabilityByLockerSize[size].totalCount} ${size} lockers are available`);
+  const available = availability.availabilityByLockerSize[size].availableCount;
+  const total = availability.availabilityByLockerSize[size].totalCount;
+  console.log(`${available}/${total} ${size} lockers are available`);
 }
 
 console.log(`Locker availability last updated at ${availability.lastUpdatedAt}`);

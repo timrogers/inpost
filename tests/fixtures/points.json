@@ -1,0 +1,566 @@
+{
+    "href": "https://api-uk-points.easypack24.net/v1/points",
+    "count": 10,
+    "page": 1,
+    "per_page": 10,
+    "total_pages": 1,
+    "items": [
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UKUPM00001",
+            "name": "UKUPM00001",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.2467,
+                "latitude": 51.553
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "On the left hand side of the petrol station main shop",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 955,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "Corbets Tey Road 24/7 InPost Locker - BP Tey Service Station",
+                "line2": "RM14 2AB Upminster"
+            },
+            "address_details": {
+                "city": "Upminster",
+                "province": "London",
+                "post_code": "RM14 2AB",
+                "street": "Corbets Tey Road",
+                "building_number": "24/7 InPost Locker - BP Tey Service Station",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": false,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UKUPM00001.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00058679",
+            "name": "UK00058679",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.23649,
+                "latitude": 51.57831
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Left side of the shop against the fence",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 2446,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "4-6 Essex Gardens, Hornchurch 24/7 InPost Locker - Essex Wines",
+                "line2": "RM11 3EH London"
+            },
+            "address_details": {
+                "city": "London",
+                "province": "London",
+                "post_code": "RM11 3EH",
+                "street": "4-6 Essex Gardens, Hornchurch",
+                "building_number": "24/7 InPost Locker - Essex Wines",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00058679.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00013780",
+            "name": "UK00013780",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.21914,
+                "latitude": 51.56347
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Outside in the car park, in the motorcycle parking area - free standing unit against the trolley bay",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 2538,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "101-105 High Street 24/7 InPost Locker - SAINSBURY\u0027S Hornchurch",
+                "line2": "RM11 1TX London"
+            },
+            "address_details": {
+                "city": "London",
+                "province": "London",
+                "post_code": "RM11 1TX",
+                "street": "101-105 High Street",
+                "building_number": "24/7 InPost Locker - SAINSBURY\u0027S Hornchurch",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00013780.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00061711",
+            "name": "UK00061711",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.21954,
+                "latitude": 51.5686
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Outside the front of the store, on the right hand side,  infront of the advertisement hording.",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 2666,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "163 Billet Ln, Hornchurch 24/7 InPost Locker - Planet Stores",
+                "line2": "RM11 1UR London"
+            },
+            "address_details": {
+                "city": "London",
+                "province": "London",
+                "post_code": "RM11 1UR",
+                "street": "163 Billet Ln, Hornchurch",
+                "building_number": "24/7 InPost Locker - Planet Stores",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00061711.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UKLON00433",
+            "name": "UKLON00433",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.23589,
+                "latitude": 51.58087
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Next to night pay window.",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 2712,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "Southend Arterial Road 24/7 InPost Locker - BP Hornchurch",
+                "line2": "RM11 3EA Hornchurch"
+            },
+            "address_details": {
+                "city": "Hornchurch",
+                "province": "London",
+                "post_code": "RM11 3EA",
+                "street": "Southend Arterial Road",
+                "building_number": "24/7 InPost Locker - BP Hornchurch",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UKLON00433.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00021042",
+            "name": "UK00021042",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.21013,
+                "latitude": 51.57173
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Outside, to the right hand side of the store. To the right of the post box.",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 3401,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "140 Hillview Avenue, Hornchurch 24/7 InPost Locker - Hillview Food and Wine",
+                "line2": "RM11 2DL London"
+            },
+            "address_details": {
+                "city": "London",
+                "province": "London",
+                "post_code": "RM11 2DL",
+                "street": "140 Hillview Avenue, Hornchurch",
+                "building_number": "24/7 InPost Locker - Hillview Food and Wine",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00021042.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00012819",
+            "name": "UK00012819",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.20829,
+                "latitude": 51.54379
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Outside, down the right hand side of the Tesco supermarket, next to the car park.",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 3705,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "Airfield Way 24/7 InPost Locker - TESCO SUPERSTORE Hornchurch",
+                "line2": "RM12 5AF Hornchurch"
+            },
+            "address_details": {
+                "city": "Hornchurch",
+                "province": "London",
+                "post_code": "RM12 5AF",
+                "street": "Airfield Way",
+                "building_number": "24/7 InPost Locker - TESCO SUPERSTORE Hornchurch",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00012819.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00017834",
+            "name": "UK00017834",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.20549,
+                "latitude": 51.57529
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Backing on to the front left side of the store",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 3859,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "319 Brentwood Road, Romford 24/7 InPost Locker - Loco Sid\u0027s",
+                "line2": "RM2 5SX London"
+            },
+            "address_details": {
+                "city": "London",
+                "province": "London",
+                "post_code": "RM2 5SX",
+                "street": "319 Brentwood Road, Romford",
+                "building_number": "24/7 InPost Locker - Loco Sid\u0027s",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00017834.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UKBRE00001",
+            "name": "UKBRE00001",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.31358,
+                "latitude": 51.57462
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Behind the air and water pumps to the side of the shop",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 4360,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "A127 Southend Arterial Road 24/7 InPost Locker - Basildon Petrol Station",
+                "line2": "CM13 3EN Brentwood"
+            },
+            "address_details": {
+                "city": "Brentwood",
+                "province": "East of England",
+                "post_code": "CM13 3EN",
+                "street": "A127 Southend Arterial Road",
+                "building_number": "24/7 InPost Locker - Basildon Petrol Station",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": false,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UKBRE00001.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        },
+        {
+            "href": "https://api-uk-points.easypack24.net/v1/points/UK00012973",
+            "name": "UK00012973",
+            "type": [
+                "parcel_locker"
+            ],
+            "status": "Operating",
+            "location": {
+                "longitude": 0.19188,
+                "latitude": 51.56634
+            },
+            "location_type": "Outdoor",
+            "location_date": null,
+            "location_description": "Outside, down the left hand side of the Tesco supermarket, next to the Bybox lockers.",
+            "location_description_1": null,
+            "location_description_2": null,
+            "distance": 4451,
+            "opening_hours": "24/7",
+            "address": {
+                "line1": "300 Hornchurch Road 24/7 InPost Locker - TESCO Romford Extra",
+                "line2": "RM11 1PY Hornchurch"
+            },
+            "address_details": {
+                "city": "Hornchurch",
+                "province": "London",
+                "post_code": "RM11 1PY",
+                "street": "300 Hornchurch Road",
+                "building_number": "24/7 InPost Locker - TESCO Romford Extra",
+                "flat_number": null
+            },
+            "phone_number": null,
+            "payment_point_descr": null,
+            "functions": [
+                "parcel",
+                "parcel_collect",
+                "parcel_send"
+            ],
+            "partner_id": 0,
+            "is_next": true,
+            "payment_available": true,
+            "payment_type": {
+                "3": "Payment by cash and card"
+            },
+            "virtual": "0",
+            "recommended_low_interest_box_machines_list": null,
+            "apm_doubled": null,
+            "location_247": true,
+            "operating_hours_extended": {
+                "customer": null
+            },
+            "agency": null,
+            "image_url": "https://static.easypack24.net/points/uk/images/UK00012973.jpg",
+            "easy_access_zone": true,
+            "air_index_level": null
+        }
+    ],
+    "meta": {
+        "href": "https://api-uk-points.easypack24.net/v1/points",
+        "count": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}

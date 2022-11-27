@@ -1,0 +1,48 @@
+{
+  "name": "inpost",
+  "version": "0.0.0-development",
+  "description": "A JavaScript library for interacting with parcel lockers offered by InPost (<https://inpost.eu>), starting with lockers in the UK.",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/esm/index.js",
+  "homepage": "https://github.com/timrogers/inpost",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "npx tsc -p tsconfig.json && tsc -p tsconfig-commonjs.json",
+    "prepublish": "npm run build",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "semantic-release": "semantic-release"
+  },
+  "author": "Tim Rogers <me@timrogers.co.uk>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.0.3",
+    "nock": "^13.2.9",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.5",
+    "ts-jest": "^29.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timrogers/inpost.git"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "dependencies": {
+    "cross-fetch": "^3.1.5"
+  }
+}

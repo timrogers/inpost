@@ -9,7 +9,7 @@ import availabilityErrorFixture from './fixtures/availability-error.json';
 describe('findLocationsByPostcode', () => {
   beforeEach(() => {
     nock.disableNetConnect();
-  })
+  });
 
   test('returns a list of locations', async () => {
     nock('https://api-uk-points.easypack24.net')

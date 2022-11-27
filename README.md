@@ -40,6 +40,8 @@ for (const location of locations) {
 }
 ```
 
+See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
+
 Each location includes an `id` which can be used to get locker availability for that location.
 
 ### Getting locker availability for an InPost location
@@ -58,9 +60,11 @@ for (const size of [LockerSize.SMALL, LockerSize.MEDIUM, LockerSize.LARGE]) {
 console.log(`Locker availability last updated at ${availability.lastUpdatedAt}`);
 ```
 
+See the [`LocationAvailability` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for full details how availability is represented.
+
 ### Error handling
 
-If InPost returns an error, then a `ResponseError` will be thrown.
+If InPost returns an error, then a [`ResponseError`](https://github.com/timrogers/inpost/blob/main/src/errors.ts#L1) will be thrown.
 
 The error's message will include the error message returned by InPost - or if no error message can be found, then it'll use something fairly generic (`Got status code 404, expected 200`).
 

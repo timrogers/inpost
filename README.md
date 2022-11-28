@@ -52,7 +52,7 @@ To fetch an InPost location by its ID - returned by `findLocationsByPostcode` - 
 ```ts
 import { getLocation } from 'inpost';
 
-const locations = await getLocation('UK00000756');
+const location = await getLocation('UK00000756');
 
 console.log(`Loaded location "${location.name}"`);
 ```

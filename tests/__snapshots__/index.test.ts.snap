@@ -88,3 +88,14 @@ exports[`getAvailabilityForLocation returns availability data for a location 1`]
 `;
 
 exports[`getAvailabilityForLocation throws an error for a non-200 response 1`] = `[Error: Locker [UK00058] not found or no data available]`;
+
+exports[`getLocation returns the location 1`] = `
+{
+  "id": "UK00000756",
+  "latitude": 51.58916,
+  "longitude": -0.55524,
+  "name": "Gerrards Cross Station",
+}
+`;
+
+exports[`getLocation throws an error for a non-200 response 1`] = `[Error: Point not found.]`;

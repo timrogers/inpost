@@ -30,38 +30,12 @@ const getErrorMessage = (responseBody: LooseObject, responseStatus: number) => {
 };
 
 /*
- * Fetches current locker availability for a specific InPost location
+ * Process a response returned by InPost's API, throwing an error if the response
+ * is an error, or otherwise returning the parsed JSON
  */
-export const getAvailabilityForLocation = async (
-  locationId: string,
-): Promise<LocationAvailability> => {
-  const params = new URLSearchParams();
-  params.append('apm', locationId);
-
-  const response = await fetch(
-    `https://api.inpost247.uk/locker-capacity?${params.toString()}`,
-  );
-
+const processResponse = async (response: Response): Promise<LooseObject> => {
   if (response.ok) {
-    const responseBody = await response.json();
-
-    return {
-      lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
-      availabilityByLockerSize: {
-        [LockerSize.SMALL]: {
-          totalCount: responseBody.A.total,
-          availableCount: responseBody.A.available,
-        },
-        [LockerSize.MEDIUM]: {
-          totalCount: responseBody.B.total,
-          availableCount: responseBody.B.available,
-        },
-        [LockerSize.LARGE]: {
-          totalCount: responseBody.C.total,
-          availableCount: responseBody.C.available,
-        },
-      },
-    };
+    return response.json();
   } else {
     const responseBody = await response.json();
     const error = getErrorMessage(responseBody, response.status);
@@ -71,35 +45,76 @@ export const getAvailabilityForLocation = async (
 };
 
 /*
+ * Fetches current locker availability for a specific InPost location
+ */
+export const getAvailabilityForLocation = async (
+  locationId: string,
+): Promise<LocationAvailability> => {
+  const params = new URLSearchParams({ apm: locationId });
+
+  const response = await fetch(
+    `https://api.inpost247.uk/locker-capacity?${params.toString()}`,
+  );
+
+  const responseBody = await processResponse(response);
+
+  return {
+    lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
+    availabilityByLockerSize: {
+      [LockerSize.SMALL]: {
+        totalCount: responseBody.A.total,
+        availableCount: responseBody.A.available,
+      },
+      [LockerSize.MEDIUM]: {
+        totalCount: responseBody.B.total,
+        availableCount: responseBody.B.available,
+      },
+      [LockerSize.LARGE]: {
+        totalCount: responseBody.C.total,
+        availableCount: responseBody.C.available,
+      },
+    },
+  };
+};
+
+/*
+ * Fetches an InPost location by its ID
+ */
+export const getLocation = async (locationId: string): Promise<Location> => {
+  const response = await fetch(
+    `https://api-uk-points.easypack24.net/v1/points/${locationId}`,
+  );
+
+  const responseBody = await processResponse(response);
+
+  return serializeLocation(responseBody);
+};
+
+const serializeLocation = (location: LooseObject): Location => {
+  return {
+    id: location.name,
+    name: transformBuildingNumberToName(location.address_details.building_number),
+    latitude: location.location.latitude,
+    longitude: location.location.longitude,
+  };
+};
+
+/*
  * Fetches a list of InPost locations near to the provided postcode
  */
 export const findLocationsByPostcode = async (postcode: string): Promise<Location[]> => {
-  const params = new URLSearchParams();
-  params.append('relative_post_code', postcode);
-  params.append('max_distance', '16000');
-  params.append('status', 'Operating');
-  params.append('limit', '10');
+  const params = new URLSearchParams({
+    relative_post_code: postcode,
+    limit: '10',
+    max_distance: '16000',
+    status: 'Operating',
+  });
 
   const response = await fetch(
     `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,
   );
 
-  if (response.ok) {
-    const responseBody = await response.json();
+  const responseBody = await processResponse(response);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return responseBody.items.map((item: any) => {
-      return {
-        id: item.name,
-        name: transformBuildingNumberToName(item.address_details.building_number),
-        latitude: item.location.latitude,
-        longitude: item.location.longitude,
-      };
-    });
-  } else {
-    const responseBody = await response.json();
-    const error = getErrorMessage(responseBody, response.status);
-
-    throw new ResponseError(error, response);
-  }
+  return responseBody.items.map(serializeLocation);
 };

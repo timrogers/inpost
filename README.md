@@ -5,6 +5,7 @@ This JavaScript package allows you to interact with [InPost parcel lockers](http
 With this driver, you can:
 
 * Find InPost locations near to a given UK postcode
+* Fetch a location by its ID (returned when you search by postcode)
 * Discover how many lockers, if any, are available at any given location
 
 ## Installation
@@ -42,7 +43,21 @@ for (const location of locations) {
 
 See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
 
-Each location includes an `id` which can be used to get locker availability for that location.
+Each location includes an `id` which can be used to get locker availability for that location and to fetch the location by its ID in the future.
+
+### Fetching a location by its ID
+
+To fetch an InPost location by its ID - returned by `findLocationsByPostcode` - use the `getLocation` function:
+
+```ts
+import { getLocation } from 'inpost';
+
+const locations = await getLocation('UK00000756');
+
+console.log(`Loaded location "${location.name}"`);
+```
+
+See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for a location.
 
 ### Getting locker availability for an InPost location
 

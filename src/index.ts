@@ -30,6 +30,21 @@ const getErrorMessage = (responseBody: LooseObject, responseStatus: number) => {
 };
 
 /*
+ * Process a response returned by InPost's API, throwing an error if the response
+ * is an error, or otherwise returning the parsed JSON
+ */
+const processResponse = async (response: Response): Promise<LooseObject> => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    const responseBody = await response.json();
+    const error = getErrorMessage(responseBody, response.status);
+
+    throw new ResponseError(error, response);
+  }
+};
+
+/*
  * Fetches current locker availability for a specific InPost location
  */
 export const getAvailabilityForLocation = async (
@@ -42,32 +57,25 @@ export const getAvailabilityForLocation = async (
     `https://api.inpost247.uk/locker-capacity?${params.toString()}`,
   );
 
-  if (response.ok) {
-    const responseBody = await response.json();
+  const responseBody = await processResponse(response);
 
-    return {
-      lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
-      availabilityByLockerSize: {
-        [LockerSize.SMALL]: {
-          totalCount: responseBody.A.total,
-          availableCount: responseBody.A.available,
-        },
-        [LockerSize.MEDIUM]: {
-          totalCount: responseBody.B.total,
-          availableCount: responseBody.B.available,
-        },
-        [LockerSize.LARGE]: {
-          totalCount: responseBody.C.total,
-          availableCount: responseBody.C.available,
-        },
+  return {
+    lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
+    availabilityByLockerSize: {
+      [LockerSize.SMALL]: {
+        totalCount: responseBody.A.total,
+        availableCount: responseBody.A.available,
       },
-    };
-  } else {
-    const responseBody = await response.json();
-    const error = getErrorMessage(responseBody, response.status);
-
-    throw new ResponseError(error, response);
-  }
+      [LockerSize.MEDIUM]: {
+        totalCount: responseBody.B.total,
+        availableCount: responseBody.B.available,
+      },
+      [LockerSize.LARGE]: {
+        totalCount: responseBody.C.total,
+        availableCount: responseBody.C.available,
+      },
+    },
+  };
 };
 
 /*
@@ -84,22 +92,15 @@ export const findLocationsByPostcode = async (postcode: string): Promise<Locatio
     `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,
   );
 
-  if (response.ok) {
-    const responseBody = await response.json();
+  const responseBody = await processResponse(response);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return responseBody.items.map((item: any) => {
-      return {
-        id: item.name,
-        name: transformBuildingNumberToName(item.address_details.building_number),
-        latitude: item.location.latitude,
-        longitude: item.location.longitude,
-      };
-    });
-  } else {
-    const responseBody = await response.json();
-    const error = getErrorMessage(responseBody, response.status);
-
-    throw new ResponseError(error, response);
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return responseBody.items.map((item: any) => {
+    return {
+      id: item.name,
+      name: transformBuildingNumberToName(item.address_details.building_number),
+      latitude: item.location.latitude,
+      longitude: item.location.longitude,
+    };
+  });
 };

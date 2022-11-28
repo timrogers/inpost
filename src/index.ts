@@ -78,6 +78,28 @@ export const getAvailabilityForLocation = async (
 };
 
 /*
+ * Fetches an InPost location by its ID
+ */
+export const getLocation = async (locationId: string): Promise<Location> => {
+  const response = await fetch(
+    `https://api-uk-points.easypack24.net/v1/points/${locationId}`,
+  );
+
+  const responseBody = await processResponse(response);
+
+  return serializeLocation(responseBody);
+};
+
+const serializeLocation = (location: LooseObject): Location => {
+  return {
+    id: location.name,
+    name: transformBuildingNumberToName(location.address_details.building_number),
+    latitude: location.location.latitude,
+    longitude: location.location.longitude,
+  };
+};
+
+/*
  * Fetches a list of InPost locations near to the provided postcode
  */
 export const findLocationsByPostcode = async (postcode: string): Promise<Location[]> => {
@@ -94,13 +116,5 @@ export const findLocationsByPostcode = async (postcode: string): Promise<Locatio
 
   const responseBody = await processResponse(response);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return responseBody.items.map((item: any) => {
-    return {
-      id: item.name,
-      name: transformBuildingNumberToName(item.address_details.building_number),
-      latitude: item.location.latitude,
-      longitude: item.location.longitude,
-    };
-  });
+  return responseBody.items.map(serializeLocation);
 };

@@ -1,8 +1,14 @@
 import nock from 'nock';
 
-import { findLocationsByPostcode, getAvailabilityForLocation } from '../src/index';
+import {
+  findLocationsByPostcode,
+  getAvailabilityForLocation,
+  getLocation,
+} from '../src/index';
 import pointsFixture from './fixtures/points.json';
 import pointsErrorFixture from './fixtures/points-error.json';
+import pointFixture from './fixtures/point.json';
+import pointErrorFixture from './fixtures/point-error.json';
 import availabilityFixture from './fixtures/availability.json';
 import availabilityErrorFixture from './fixtures/availability-error.json';
 
@@ -40,6 +46,31 @@ describe('findLocationsByPostcode', () => {
 
     expect.assertions(1);
     return expect(findLocationsByPostcode('SW1A')).rejects.toMatchSnapshot();
+  });
+});
+
+describe('getLocation', () => {
+  beforeEach(() => {
+    nock.disableNetConnect();
+  });
+
+  test('returns the location', async () => {
+    nock('https://api-uk-points.easypack24.net')
+      .get('/v1/points/UK00000756')
+      .reply(200, pointFixture);
+
+    const location = await getLocation('UK00000756');
+
+    expect(location).toMatchSnapshot();
+  });
+
+  test('throws an error for a non-200 response', async () => {
+    nock('https://api-uk-points.easypack24.net')
+      .get('/v1/points/UK0000075')
+      .reply(400, pointErrorFixture);
+
+    expect.assertions(1);
+    return expect(getLocation('UK0000075')).rejects.toMatchSnapshot();
   });
 });
 

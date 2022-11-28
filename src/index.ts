@@ -50,8 +50,7 @@ const processResponse = async (response: Response): Promise<LooseObject> => {
 export const getAvailabilityForLocation = async (
   locationId: string,
 ): Promise<LocationAvailability> => {
-  const params = new URLSearchParams();
-  params.append('apm', locationId);
+  const params = new URLSearchParams({ apm: locationId });
 
   const response = await fetch(
     `https://api.inpost247.uk/locker-capacity?${params.toString()}`,
@@ -82,11 +81,12 @@ export const getAvailabilityForLocation = async (
  * Fetches a list of InPost locations near to the provided postcode
  */
 export const findLocationsByPostcode = async (postcode: string): Promise<Location[]> => {
-  const params = new URLSearchParams();
-  params.append('relative_post_code', postcode);
-  params.append('max_distance', '16000');
-  params.append('status', 'Operating');
-  params.append('limit', '10');
+  const params = new URLSearchParams({
+    relative_post_code: postcode,
+    limit: '10',
+    max_distance: '16000',
+    status: 'Operating',
+  });
 
   const response = await fetch(
     `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,

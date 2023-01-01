@@ -100,6 +100,30 @@ const serializeLocation = (location: LooseObject): Location => {
 };
 
 /*
+ * Fetches a list of InPost locations near to the provided latitude and longitude
+ * coordinates
+ */
+export const findLocationsByCoordinates = async (
+  latitude: number,
+  longitude: number,
+): Promise<Location[]> => {
+  const params = new URLSearchParams({
+    relative_point: `${latitude},${longitude}`,
+    limit: '10',
+    max_distance: '16000',
+    status: 'Operating',
+  });
+
+  const response = await fetch(
+    `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,
+  );
+
+  const responseBody = await processResponse(response);
+
+  return responseBody.items.map(serializeLocation);
+};
+
+/*
  * Fetches a list of InPost locations near to the provided postcode
  */
 export const findLocationsByPostcode = async (postcode: string): Promise<Location[]> => {

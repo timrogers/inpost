@@ -1,6 +1,7 @@
 import nock from 'nock';
 
 import {
+  findLocationsByCoordinates,
   findLocationsByPostcode,
   getAvailabilityForLocation,
   getLocation,
@@ -46,6 +47,43 @@ describe('findLocationsByPostcode', () => {
 
     expect.assertions(1);
     return expect(findLocationsByPostcode('SW1A')).rejects.toMatchSnapshot();
+  });
+});
+
+describe('findLocationsByCoordinates', () => {
+  beforeEach(() => {
+    nock.disableNetConnect();
+  });
+
+  test('returns a list of locations', async () => {
+    nock('https://api-uk-points.easypack24.net')
+      .get('/v1/points')
+      .query({
+        relative_point: '51.463,-0.0987',
+        max_distance: '16000',
+        status: 'Operating',
+        limit: '10',
+      })
+      .reply(200, pointsFixture);
+
+    const locations = await findLocationsByCoordinates(51.463, -0.0987);
+
+    expect(locations).toMatchSnapshot();
+  });
+
+  test('throws an error for a non-200 response', async () => {
+    nock('https://api-uk-points.easypack24.net')
+      .get('/v1/points')
+      .query({
+        relative_point: '51.463,-0.0987',
+        max_distance: '16000',
+        status: 'Operating',
+        limit: '10',
+      })
+      .reply(400, pointsErrorFixture);
+
+    expect.assertions(1);
+    return expect(findLocationsByCoordinates(51.463, -0.0987)).rejects.toMatchSnapshot();
   });
 });
 

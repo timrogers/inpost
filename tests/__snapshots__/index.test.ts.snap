@@ -1,5 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`findLocationsByCoordinates returns a list of locations 1`] = `
+[
+  {
+    "id": "UKUPM00001",
+    "latitude": 51.553,
+    "longitude": 0.2467,
+    "name": "BP Tey Service Station",
+  },
+  {
+    "id": "UK00058679",
+    "latitude": 51.57831,
+    "longitude": 0.23649,
+    "name": "Essex Wines",
+  },
+  {
+    "id": "UK00013780",
+    "latitude": 51.56347,
+    "longitude": 0.21914,
+    "name": "SAINSBURY'S Hornchurch",
+  },
+  {
+    "id": "UK00061711",
+    "latitude": 51.5686,
+    "longitude": 0.21954,
+    "name": "Planet Stores",
+  },
+  {
+    "id": "UKLON00433",
+    "latitude": 51.58087,
+    "longitude": 0.23589,
+    "name": "BP Hornchurch",
+  },
+  {
+    "id": "UK00021042",
+    "latitude": 51.57173,
+    "longitude": 0.21013,
+    "name": "Hillview Food and Wine",
+  },
+  {
+    "id": "UK00012819",
+    "latitude": 51.54379,
+    "longitude": 0.20829,
+    "name": "TESCO SUPERSTORE Hornchurch",
+  },
+  {
+    "id": "UK00017834",
+    "latitude": 51.57529,
+    "longitude": 0.20549,
+    "name": "Loco Sid's",
+  },
+  {
+    "id": "UKBRE00001",
+    "latitude": 51.57462,
+    "longitude": 0.31358,
+    "name": "Basildon Petrol Station",
+  },
+  {
+    "id": "UK00012973",
+    "latitude": 51.56634,
+    "longitude": 0.19188,
+    "name": "TESCO Romford Extra",
+  },
+]
+`;
+
+exports[`findLocationsByCoordinates throws an error for a non-200 response 1`] = `[Error: Post code not found.]`;
+
 exports[`findLocationsByPostcode returns a list of locations 1`] = `
 [
   {

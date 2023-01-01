@@ -1,11 +1,12 @@
 # InPost
 
-This JavaScript package allows you to interact with [InPost parcel lockers](https://inpost.eu) in the [UK](https://inpost.co.uk) using InPost's undocumented APIs. 
+This JavaScript package allows you to interact with [InPost parcel lockers](https://inpost.eu) in the [UK](https://inpost.co.uk) using InPost's undocumented APIs.
 
 With this driver, you can:
 
 * Find InPost locations near to a given UK postcode
-* Fetch a location by its ID (returned when you search by postcode)
+* Find InPost locations near to a set of latitude and longitude coordinates
+* Fetch a location by its ID (returned when you search by postcode or coordinates)
 * Discover how many lockers, if any, are available at any given location
 
 ## Installation
@@ -45,9 +46,27 @@ See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/type
 
 Each location includes an `id` which can be used to get locker availability for that location and to fetch the location by its ID in the future.
 
+### Finding InPost locations near to a set of latitude and longitude coordinates
+
+To find InPost locations near to a specific set of latitude and longitude coordinates, use the `findLocationsByCoordinates` function:
+
+```ts
+import { findLocationsByCoordinates } from 'inpost';
+
+const locations = await findLocationsByCoordinates(51.463, -0.0987);
+
+for (const location of locations) {
+  console.log(`Found nearby location "${location.name}" ${location.id}`);
+}
+```
+
+See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
+
+Each location includes an `id` which can be used to get locker availability for that location and to fetch the location by its ID in the future.
+
 ### Fetching a location by its ID
 
-To fetch an InPost location by its ID - returned by `findLocationsByPostcode` - use the `getLocation` function:
+To fetch an InPost location by its ID - returned by `findLocationsByPostcode` or `findLocationsByCoordinates` - use the `getLocation` function:
 
 ```ts
 import { getLocation } from 'inpost';

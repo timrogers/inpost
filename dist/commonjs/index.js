@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findLocationsByPostcode = exports.getLocation = exports.getAvailabilityForLocation = exports.LockerSize = exports.ResponseError = void 0;
+exports.findLocationsByPostcode = exports.findLocationsByCoordinates = exports.getLocation = exports.getAvailabilityForLocation = exports.LockerSize = exports.ResponseError = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const errors_1 = require("./errors");
 Object.defineProperty(exports, "ResponseError", { enumerable: true, get: function () { return errors_1.ResponseError; } });
@@ -93,6 +93,22 @@ const serializeLocation = (location) => {
         longitude: location.location.longitude,
     };
 };
+/*
+ * Fetches a list of InPost locations near to the provided latitude and longitude
+ * coordinates
+ */
+const findLocationsByCoordinates = (latitude, longitude) => __awaiter(void 0, void 0, void 0, function* () {
+    const params = new URLSearchParams({
+        relative_point: `${latitude},${longitude}`,
+        limit: '10',
+        max_distance: '16000',
+        status: 'Operating',
+    });
+    const response = yield (0, cross_fetch_1.default)(`https://api-uk-points.easypack24.net/v1/points?${params.toString()}`);
+    const responseBody = yield processResponse(response);
+    return responseBody.items.map(serializeLocation);
+});
+exports.findLocationsByCoordinates = findLocationsByCoordinates;
 /*
  * Fetches a list of InPost locations near to the provided postcode
  */

@@ -3,15 +3,12 @@ import nock from 'nock';
 import {
   findLocationsByCoordinates,
   findLocationsByPostcode,
-  getAvailabilityForLocation,
   getLocation,
 } from '../src/index';
 import pointsFixture from './fixtures/points.json';
 import pointsErrorFixture from './fixtures/points-error.json';
 import pointFixture from './fixtures/point.json';
 import pointErrorFixture from './fixtures/point-error.json';
-import availabilityFixture from './fixtures/availability.json';
-import availabilityErrorFixture from './fixtures/availability-error.json';
 
 describe('findLocationsByPostcode', () => {
   beforeEach(() => {
@@ -19,13 +16,14 @@ describe('findLocationsByPostcode', () => {
   });
 
   test('returns a list of locations', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points')
       .query({
         relative_post_code: 'SW1A 1AA',
         max_distance: '16000',
-        status: 'Operating',
+        status: 'Operating NonOperating Disabled',
         limit: '10',
+        virtual: '0',
       })
       .reply(200, pointsFixture);
 
@@ -35,13 +33,14 @@ describe('findLocationsByPostcode', () => {
   });
 
   test('throws an error for a non-200 response', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points')
       .query({
         relative_post_code: 'SW1A',
         max_distance: '16000',
-        status: 'Operating',
+        status: 'Operating NonOperating Disabled',
         limit: '10',
+        virtual: '0',
       })
       .reply(400, pointsErrorFixture);
 
@@ -56,13 +55,14 @@ describe('findLocationsByCoordinates', () => {
   });
 
   test('returns a list of locations', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points')
       .query({
         relative_point: '51.463,-0.0987',
         max_distance: '16000',
-        status: 'Operating',
+        status: 'Operating NonOperating Disabled',
         limit: '10',
+        virtual: '0',
       })
       .reply(200, pointsFixture);
 
@@ -72,13 +72,14 @@ describe('findLocationsByCoordinates', () => {
   });
 
   test('throws an error for a non-200 response', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points')
       .query({
         relative_point: '51.463,-0.0987',
         max_distance: '16000',
-        status: 'Operating',
+        status: 'Operating NonOperating Disabled',
         limit: '10',
+        virtual: '0',
       })
       .reply(400, pointsErrorFixture);
 
@@ -93,7 +94,7 @@ describe('getLocation', () => {
   });
 
   test('returns the location', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points/UK00000756')
       .reply(200, pointFixture);
 
@@ -103,38 +104,11 @@ describe('getLocation', () => {
   });
 
   test('throws an error for a non-200 response', async () => {
-    nock('https://api-uk-points.easypack24.net')
+    nock('https://api-uk-global-points.easypack24.net')
       .get('/v1/points/UK0000075')
       .reply(400, pointErrorFixture);
 
     expect.assertions(1);
     return expect(getLocation('UK0000075')).rejects.toMatchSnapshot();
-  });
-});
-
-describe('getAvailabilityForLocation', () => {
-  test('returns availability data for a location', async () => {
-    nock('https://api.inpost247.uk')
-      .get('/locker-capacity')
-      .query({
-        apm: 'UK00058679',
-      })
-      .reply(200, availabilityFixture);
-
-    const locations = await getAvailabilityForLocation('UK00058679');
-
-    expect(locations).toMatchSnapshot();
-  });
-
-  test('throws an error for a non-200 response', async () => {
-    nock('https://api.inpost247.uk')
-      .get('/locker-capacity')
-      .query({
-        apm: 'UK000586',
-      })
-      .reply(404, availabilityErrorFixture);
-
-    expect.assertions(1);
-    return expect(getAvailabilityForLocation('UK000586')).rejects.toMatchSnapshot();
   });
 });

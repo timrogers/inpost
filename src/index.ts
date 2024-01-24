@@ -1,10 +1,10 @@
 import fetch from 'cross-fetch';
 
 import { ResponseError } from './errors';
-import { Location, LockerSize, LocationAvailability } from './types';
+import { Location, LockerSize, LockerAvailabilityLevel, ListedLocation } from './types';
 
 // Re-export these types, which are part of the module's public API
-export { ResponseError, LockerSize, Location, LocationAvailability };
+export { ResponseError, LockerSize, Location, LockerAvailabilityLevel, ListedLocation };
 
 /*
  * Extracts the location name from the "building number" returned by InPost's
@@ -45,44 +45,11 @@ const processResponse = async (response: Response): Promise<LooseObject> => {
 };
 
 /*
- * Fetches current locker availability for a specific InPost location
- */
-export const getAvailabilityForLocation = async (
-  locationId: string,
-): Promise<LocationAvailability> => {
-  const params = new URLSearchParams({ apm: locationId });
-
-  const response = await fetch(
-    `https://api.inpost247.uk/locker-capacity?${params.toString()}`,
-  );
-
-  const responseBody = await processResponse(response);
-
-  return {
-    lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
-    availabilityByLockerSize: {
-      [LockerSize.SMALL]: {
-        totalCount: responseBody.A.total,
-        availableCount: responseBody.A.available,
-      },
-      [LockerSize.MEDIUM]: {
-        totalCount: responseBody.B.total,
-        availableCount: responseBody.B.available,
-      },
-      [LockerSize.LARGE]: {
-        totalCount: responseBody.C.total,
-        availableCount: responseBody.C.available,
-      },
-    },
-  };
-};
-
-/*
  * Fetches an InPost location by its ID
  */
 export const getLocation = async (locationId: string): Promise<Location> => {
   const response = await fetch(
-    `https://api-uk-points.easypack24.net/v1/points/${locationId}`,
+    `https://api-uk-global-points.easypack24.net/v1/points/${locationId}`,
   );
 
   const responseBody = await processResponse(response);
@@ -96,7 +63,19 @@ const serializeLocation = (location: LooseObject): Location => {
     name: transformBuildingNumberToName(location.address_details.building_number),
     latitude: location.location.latitude,
     longitude: location.location.longitude,
+    smallLockerAvailability: location.locker_availability.details.A,
+    mediumLockerAvailability: location.locker_availability.details.B,
+    largeLockerAvailability: location.locker_availability.details.C,
+    overallLockerAvailability: location.locker_availability.status,
   };
+};
+
+const serializeListedLocation = (location: LooseObject): ListedLocation => {
+  const singleLocation = serializeLocation(location);
+
+  const lastUpdatedAtMilliseconds = location.last_updated_date.seconds * 1_000;
+
+  return { ...singleLocation, lastUpdatedAt: new Date(lastUpdatedAtMilliseconds) };
 };
 
 /*
@@ -106,39 +85,47 @@ const serializeLocation = (location: LooseObject): Location => {
 export const findLocationsByCoordinates = async (
   latitude: number,
   longitude: number,
-): Promise<Location[]> => {
+): Promise<ListedLocation[]> => {
   const params = new URLSearchParams({
     relative_point: `${latitude},${longitude}`,
     limit: '10',
     max_distance: '16000',
-    status: 'Operating',
+    // TODO: Figure out what the new values beyond "Operating" do
+    status: 'Operating NonOperating Disabled',
+    // TODO: Figure out what this parameter does
+    virtual: '0',
   });
 
   const response = await fetch(
-    `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,
+    `https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`,
   );
 
   const responseBody = await processResponse(response);
 
-  return responseBody.items.map(serializeLocation);
+  return responseBody.items.map(serializeListedLocation);
 };
 
 /*
  * Fetches a list of InPost locations near to the provided postcode
  */
-export const findLocationsByPostcode = async (postcode: string): Promise<Location[]> => {
+export const findLocationsByPostcode = async (
+  postcode: string,
+): Promise<ListedLocation[]> => {
   const params = new URLSearchParams({
     relative_post_code: postcode,
     limit: '10',
     max_distance: '16000',
-    status: 'Operating',
+    // TODO: Figure out what the new values beyond "Operating" do
+    status: 'Operating NonOperating Disabled',
+    // TODO: Figure out what this parameter does
+    virtual: '0',
   });
 
   const response = await fetch(
-    `https://api-uk-points.easypack24.net/v1/points?${params.toString()}`,
+    `https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`,
   );
 
   const responseBody = await processResponse(response);
 
-  return responseBody.items.map(serializeLocation);
+  return responseBody.items.map(serializeListedLocation);
 };

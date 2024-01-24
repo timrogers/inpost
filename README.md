@@ -2,12 +2,7 @@
 
 This JavaScript package allows you to interact with [InPost parcel lockers](https://inpost.eu) in the [UK](https://inpost.co.uk) using InPost's undocumented APIs.
 
-With this driver, you can:
-
-* Find InPost locations near to a given UK postcode
-* Find InPost locations near to a set of latitude and longitude coordinates
-* Fetch a location by its ID (returned when you search by postcode or coordinates)
-* Discover how many lockers, if any, are available at any given location
+With this client library, you can __access the name, address, coordinates and current locker availability__ at InPost parcel lockers near a given UK postcode or set of latitude and longitude coordinates.
 
 ## Installation
 
@@ -38,11 +33,12 @@ import { findLocationsByPostcode } from 'inpost';
 const locations = await findLocationsByPostcode('SW1A 1AA');
 
 for (const location of locations) {
-  console.log(`Found nearby location "${location.name}" ${location.id}`);
+  console.log(`Found nearby location "${location.name}" (${location.id})`);
+  console.log(`Current availability: S: ${location.smallLockerAvailability}, M: ${location.mediumLockerAvailability}, L: ${location.largeLockerAvailability}`);
 }
 ```
 
-See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
+See the [`ListedLocation` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
 
 Each location includes an `id` which can be used to get locker availability for that location and to fetch the location by its ID in the future.
 
@@ -56,11 +52,12 @@ import { findLocationsByCoordinates } from 'inpost';
 const locations = await findLocationsByCoordinates(51.463, -0.0987);
 
 for (const location of locations) {
-  console.log(`Found nearby location "${location.name}" ${location.id}`);
+  console.log(`Found nearby location "${location.name}" (${location.id})`);
+  console.log(`Current availability: S: ${location.smallLockerAvailability}, M: ${location.mediumLockerAvailability}, L: ${location.largeLockerAvailability}`);
 }
 ```
 
-See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
+See the [`ListedLocation` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for each location.
 
 Each location includes an `id` which can be used to get locker availability for that location and to fetch the location by its ID in the future.
 
@@ -74,29 +71,10 @@ import { getLocation } from 'inpost';
 const location = await getLocation('UK00000756');
 
 console.log(`Loaded location "${location.name}"`);
+console.log(`Current availability: S: ${location.smallLockerAvailability}, M: ${location.mediumLockerAvailability}, L: ${location.largeLockerAvailability}`);
 ```
 
-See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for a location.
-
-### Getting locker availability for an InPost location
-
-To get availability for a locker, use the `getAvailabilityForLocation` function:
-
-```ts
-import { getAvailabilityForLocation, LockerSize } from 'inpost';
-
-const availability = await getAvailabilityForLocation('UK00058679');
-
-for (const size of [LockerSize.SMALL, LockerSize.MEDIUM, LockerSize.LARGE]) {
-  const available = availability.availabilityByLockerSize[size].availableCount;
-  const total = availability.availabilityByLockerSize[size].totalCount;
-  console.log(`${available}/${total} ${size} lockers are available`);
-}
-
-console.log(`Locker availability last updated at ${availability.lastUpdatedAt}`);
-```
-
-See the [`LocationAvailability` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for full details how availability is represented.
+See the [`Location` type](https://github.com/timrogers/inpost/blob/main/src/types.ts) for details on the data available for a location. __Note that the `lastUpdatedAt` data, indicating when locker availability was last updated, is not available in this type, and can only be accessed through `findLocationsByPostcode` and `findLocationsByCoordinates`.__
 
 ### Error handling
 

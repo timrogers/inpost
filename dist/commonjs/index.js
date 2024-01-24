@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findLocationsByPostcode = exports.findLocationsByCoordinates = exports.getLocation = exports.getAvailabilityForLocation = exports.LockerSize = exports.ResponseError = void 0;
+exports.findLocationsByPostcode = exports.findLocationsByCoordinates = exports.getLocation = exports.LockerAvailabilityLevel = exports.LockerSize = exports.ResponseError = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const errors_1 = require("./errors");
 Object.defineProperty(exports, "ResponseError", { enumerable: true, get: function () { return errors_1.ResponseError; } });
 const types_1 = require("./types");
 Object.defineProperty(exports, "LockerSize", { enumerable: true, get: function () { return types_1.LockerSize; } });
+Object.defineProperty(exports, "LockerAvailabilityLevel", { enumerable: true, get: function () { return types_1.LockerAvailabilityLevel; } });
 /*
  * Extracts the location name from the "building number" returned by InPost's
  * API, e.g. "24/7 InPost Locker - TESCO Romford Extra" => "TESCO Romford Extra"
@@ -51,36 +52,10 @@ const processResponse = (response) => __awaiter(void 0, void 0, void 0, function
     }
 });
 /*
- * Fetches current locker availability for a specific InPost location
- */
-const getAvailabilityForLocation = (locationId) => __awaiter(void 0, void 0, void 0, function* () {
-    const params = new URLSearchParams({ apm: locationId });
-    const response = yield (0, cross_fetch_1.default)(`https://api.inpost247.uk/locker-capacity?${params.toString()}`);
-    const responseBody = yield processResponse(response);
-    return {
-        lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
-        availabilityByLockerSize: {
-            [types_1.LockerSize.SMALL]: {
-                totalCount: responseBody.A.total,
-                availableCount: responseBody.A.available,
-            },
-            [types_1.LockerSize.MEDIUM]: {
-                totalCount: responseBody.B.total,
-                availableCount: responseBody.B.available,
-            },
-            [types_1.LockerSize.LARGE]: {
-                totalCount: responseBody.C.total,
-                availableCount: responseBody.C.available,
-            },
-        },
-    };
-});
-exports.getAvailabilityForLocation = getAvailabilityForLocation;
-/*
  * Fetches an InPost location by its ID
  */
 const getLocation = (locationId) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield (0, cross_fetch_1.default)(`https://api-uk-points.easypack24.net/v1/points/${locationId}`);
+    const response = yield (0, cross_fetch_1.default)(`https://api-uk-global-points.easypack24.net/v1/points/${locationId}`);
     const responseBody = yield processResponse(response);
     return serializeLocation(responseBody);
 });
@@ -91,7 +66,16 @@ const serializeLocation = (location) => {
         name: transformBuildingNumberToName(location.address_details.building_number),
         latitude: location.location.latitude,
         longitude: location.location.longitude,
+        smallLockerAvailability: location.locker_availability.details.A,
+        mediumLockerAvailability: location.locker_availability.details.B,
+        largeLockerAvailability: location.locker_availability.details.C,
+        overallLockerAvailability: location.locker_availability.status,
     };
+};
+const serializeListedLocation = (location) => {
+    const singleLocation = serializeLocation(location);
+    const lastUpdatedAtMilliseconds = location.last_updated_date.seconds * 1000;
+    return Object.assign(Object.assign({}, singleLocation), { lastUpdatedAt: new Date(lastUpdatedAtMilliseconds) });
 };
 /*
  * Fetches a list of InPost locations near to the provided latitude and longitude
@@ -102,11 +86,14 @@ const findLocationsByCoordinates = (latitude, longitude) => __awaiter(void 0, vo
         relative_point: `${latitude},${longitude}`,
         limit: '10',
         max_distance: '16000',
-        status: 'Operating',
+        // TODO: Figure out what the new values beyond "Operating" do
+        status: 'Operating NonOperating Disabled',
+        // TODO: Figure out what this parameter does
+        virtual: '0',
     });
-    const response = yield (0, cross_fetch_1.default)(`https://api-uk-points.easypack24.net/v1/points?${params.toString()}`);
+    const response = yield (0, cross_fetch_1.default)(`https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`);
     const responseBody = yield processResponse(response);
-    return responseBody.items.map(serializeLocation);
+    return responseBody.items.map(serializeListedLocation);
 });
 exports.findLocationsByCoordinates = findLocationsByCoordinates;
 /*
@@ -117,10 +104,13 @@ const findLocationsByPostcode = (postcode) => __awaiter(void 0, void 0, void 0, 
         relative_post_code: postcode,
         limit: '10',
         max_distance: '16000',
-        status: 'Operating',
+        // TODO: Figure out what the new values beyond "Operating" do
+        status: 'Operating NonOperating Disabled',
+        // TODO: Figure out what this parameter does
+        virtual: '0',
     });
-    const response = yield (0, cross_fetch_1.default)(`https://api-uk-points.easypack24.net/v1/points?${params.toString()}`);
+    const response = yield (0, cross_fetch_1.default)(`https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`);
     const responseBody = yield processResponse(response);
-    return responseBody.items.map(serializeLocation);
+    return responseBody.items.map(serializeListedLocation);
 });
 exports.findLocationsByPostcode = findLocationsByPostcode;

@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import fetch from 'cross-fetch';
 import { ResponseError } from './errors';
-import { LockerSize } from './types';
+import { LockerSize, LockerAvailabilityLevel } from './types';
 // Re-export these types, which are part of the module's public API
-export { ResponseError, LockerSize };
+export { ResponseError, LockerSize, LockerAvailabilityLevel };
 /*
  * Extracts the location name from the "building number" returned by InPost's
  * API, e.g. "24/7 InPost Locker - TESCO Romford Extra" => "TESCO Romford Extra"
@@ -45,35 +45,10 @@ const processResponse = (response) => __awaiter(void 0, void 0, void 0, function
     }
 });
 /*
- * Fetches current locker availability for a specific InPost location
- */
-export const getAvailabilityForLocation = (locationId) => __awaiter(void 0, void 0, void 0, function* () {
-    const params = new URLSearchParams({ apm: locationId });
-    const response = yield fetch(`https://api.inpost247.uk/locker-capacity?${params.toString()}`);
-    const responseBody = yield processResponse(response);
-    return {
-        lastUpdatedAt: new Date(responseBody.lastUpdatedTime),
-        availabilityByLockerSize: {
-            [LockerSize.SMALL]: {
-                totalCount: responseBody.A.total,
-                availableCount: responseBody.A.available,
-            },
-            [LockerSize.MEDIUM]: {
-                totalCount: responseBody.B.total,
-                availableCount: responseBody.B.available,
-            },
-            [LockerSize.LARGE]: {
-                totalCount: responseBody.C.total,
-                availableCount: responseBody.C.available,
-            },
-        },
-    };
-});
-/*
  * Fetches an InPost location by its ID
  */
 export const getLocation = (locationId) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch(`https://api-uk-points.easypack24.net/v1/points/${locationId}`);
+    const response = yield fetch(`https://api-uk-global-points.easypack24.net/v1/points/${locationId}`);
     const responseBody = yield processResponse(response);
     return serializeLocation(responseBody);
 });
@@ -83,7 +58,16 @@ const serializeLocation = (location) => {
         name: transformBuildingNumberToName(location.address_details.building_number),
         latitude: location.location.latitude,
         longitude: location.location.longitude,
+        smallLockerAvailability: location.locker_availability.details.A,
+        mediumLockerAvailability: location.locker_availability.details.B,
+        largeLockerAvailability: location.locker_availability.details.C,
+        overallLockerAvailability: location.locker_availability.status,
     };
+};
+const serializeListedLocation = (location) => {
+    const singleLocation = serializeLocation(location);
+    const lastUpdatedAtMilliseconds = location.last_updated_date.seconds * 1000;
+    return Object.assign(Object.assign({}, singleLocation), { lastUpdatedAt: new Date(lastUpdatedAtMilliseconds) });
 };
 /*
  * Fetches a list of InPost locations near to the provided latitude and longitude
@@ -94,11 +78,14 @@ export const findLocationsByCoordinates = (latitude, longitude) => __awaiter(voi
         relative_point: `${latitude},${longitude}`,
         limit: '10',
         max_distance: '16000',
-        status: 'Operating',
+        // TODO: Figure out what the new values beyond "Operating" do
+        status: 'Operating NonOperating Disabled',
+        // TODO: Figure out what this parameter does
+        virtual: '0',
     });
-    const response = yield fetch(`https://api-uk-points.easypack24.net/v1/points?${params.toString()}`);
+    const response = yield fetch(`https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`);
     const responseBody = yield processResponse(response);
-    return responseBody.items.map(serializeLocation);
+    return responseBody.items.map(serializeListedLocation);
 });
 /*
  * Fetches a list of InPost locations near to the provided postcode
@@ -108,9 +95,12 @@ export const findLocationsByPostcode = (postcode) => __awaiter(void 0, void 0, v
         relative_post_code: postcode,
         limit: '10',
         max_distance: '16000',
-        status: 'Operating',
+        // TODO: Figure out what the new values beyond "Operating" do
+        status: 'Operating NonOperating Disabled',
+        // TODO: Figure out what this parameter does
+        virtual: '0',
     });
-    const response = yield fetch(`https://api-uk-points.easypack24.net/v1/points?${params.toString()}`);
+    const response = yield fetch(`https://api-uk-global-points.easypack24.net/v1/points?${params.toString()}`);
     const responseBody = yield processResponse(response);
-    return responseBody.items.map(serializeLocation);
+    return responseBody.items.map(serializeListedLocation);
 });

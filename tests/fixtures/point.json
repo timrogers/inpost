@@ -1,1 +1,76 @@
-{"href":"https://api-uk-points.easypack24.net/v1/points/UK00000756","name":"UK00000756","type":["parcel_locker"],"status":"Operating","location":{"longitude":-0.55524,"latitude":51.58916},"location_type":"Outdoor","location_date":null,"location_description":"To the left of the ticket machine at the station entrance.","location_description_1":null,"location_description_2":null,"distance":null,"opening_hours":"24/7","address":{"line1":"Packhorse Road 24/7 InPost Locker - Gerrards Cross Station","line2":"SL9 8PP Gerrards Cross"},"address_details":{"city":"Gerrards Cross","province":"South East","post_code":"SL9 8PP","street":"Packhorse Road","building_number":"24/7 InPost Locker - Gerrards Cross Station","flat_number":null},"phone_number":null,"payment_point_descr":null,"functions":["parcel","parcel_collect","parcel_send"],"partner_id":0,"is_next":true,"payment_available":true,"payment_type":{"3":"Payment by cash and card"},"virtual":"0","recommended_low_interest_box_machines_list":null,"apm_doubled":null,"location_247":true,"operating_hours_extended":{"customer":null},"agency":null,"image_url":"https://static.easypack24.net/points/uk/images/UK00000756.jpg","easy_access_zone":true,"air_index_level":null}
+{
+    "href": "http://api-uk-global-points.easypack24.net/v1/points/UK00000904",
+    "country": "GB",
+    "name": "UK00000904",
+    "type": [
+        "parcel_locker"
+    ],
+    "status": "Operating",
+    "location": {
+        "longitude": 0.06573,
+        "latitude": 51.49247
+    },
+    "location_type": "Outdoor",
+    "location_date": null,
+    "location_description": "The locker is located to the right of the shop entreated towards the carpark entrance.",
+    "location_description_1": null,
+    "location_description_2": null,
+    "distance": null,
+    "opening_hours": "24/7",
+    "address": {
+        "line1": "38 Macbean Street 24/7 InPost Locker - LIDL Woolwich",
+        "line2": "SE18 6LW Woolwich"
+    },
+    "address_details": {
+        "city": "Woolwich",
+        "province": "London",
+        "post_code": "SE18 6LW",
+        "street": "38 Macbean Street",
+        "building_number": "24/7 InPost Locker - LIDL Woolwich",
+        "flat_number": null
+    },
+    "phone_number": null,
+    "payment_point_descr": null,
+    "functions": [
+        "parcel",
+        "parcel_collect",
+        "parcel_send"
+    ],
+    "partner_id": 0,
+    "is_next": false,
+    "payment_available": true,
+    "payment_type": {
+        "3": "Payment by cash and card"
+    },
+    "virtual": "0",
+    "recommended_low_interest_box_machines_list": null,
+    "apm_doubled": null,
+    "location_247": true,
+    "operating_hours_extended": {
+        "customer": null
+    },
+    "agency": null,
+    "agencies_extended": null,
+    "image_url": "https://static.easypack24.net/points/gb/images/UK00000904.jpg",
+    "easy_access_zone": true,
+    "air_index_level": null,
+    "physical_type": "newfm",
+    "physical_type_mapped": "004",
+    "physical_type_description": null,
+    "in_mobile_collect_excluded": null,
+    "in_mobile_send_excluded": null,
+    "in_mobile_return_excluded": null,
+    "express_delivery_send": false,
+    "express_delivery_collect": false,
+    "delivery_area_id": null,
+    "micro_area_id": null,
+    "agency_code": null,
+    "locker_availability": {
+        "status": "NORMAL",
+        "details": {
+            "A": "NORMAL",
+            "B": "NORMAL",
+            "C": "NORMAL"
+        }
+    }
+}

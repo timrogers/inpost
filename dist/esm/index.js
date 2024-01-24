@@ -79,7 +79,7 @@ export const findLocationsByCoordinates = (latitude, longitude) => __awaiter(voi
         limit: '10',
         max_distance: '16000',
         // TODO: Figure out what the new values beyond "Operating" do
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         // TODO: Figure out what this parameter does
         virtual: '0',
     });
@@ -96,7 +96,7 @@ export const findLocationsByPostcode = (postcode) => __awaiter(void 0, void 0, v
         limit: '10',
         max_distance: '16000',
         // TODO: Figure out what the new values beyond "Operating" do
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         // TODO: Figure out what this parameter does
         virtual: '0',
     });

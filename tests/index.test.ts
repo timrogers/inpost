@@ -21,7 +21,7 @@ describe('findLocationsByPostcode', () => {
       .query({
         relative_post_code: 'SW1A 1AA',
         max_distance: '16000',
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         limit: '10',
         virtual: '0',
       })
@@ -38,7 +38,7 @@ describe('findLocationsByPostcode', () => {
       .query({
         relative_post_code: 'SW1A',
         max_distance: '16000',
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         limit: '10',
         virtual: '0',
       })
@@ -60,7 +60,7 @@ describe('findLocationsByCoordinates', () => {
       .query({
         relative_point: '51.463,-0.0987',
         max_distance: '16000',
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         limit: '10',
         virtual: '0',
       })
@@ -77,7 +77,7 @@ describe('findLocationsByCoordinates', () => {
       .query({
         relative_point: '51.463,-0.0987',
         max_distance: '16000',
-        status: 'Operating NonOperating Disabled',
+        status: 'Operating,NonOperating,Disabled',
         limit: '10',
         virtual: '0',
       })
